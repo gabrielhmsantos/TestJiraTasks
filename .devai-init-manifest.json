@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "init_layout_version": "0.3",
+  "agent": "opencode",
+  "managed_files": [
+    ".agents/skills/devai-find-skills/SKILL.md",
+    ".agents/skills/devai-find-skills/references/REFERENCE.md"
+  ],
+  "profile": null,
+  "profile_files": [],
+  "opencode_instructions_added": []
+}
