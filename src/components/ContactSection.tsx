@@ -10,13 +10,56 @@ const initialState: ContactFormState = {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const [state] = useFormState(submitContactForm, initialState);
   return (
     <button
       type="submit"
       disabled={pending}
-      className="w-full px-6 py-3 bg-zinc-900 dark:bg-zinc-50 text-white dark:text-zinc-900 font-semibold rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full px-6 py-3 bg-zinc-900 dark:bg-zinc-50 text-white dark:text-zinc-900 font-semibold rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
-      {pending ? "Enviando..." : "Enviar Mensagem"}
+      {pending ? (
+        <>
+          <svg
+            className="animate-spin h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
+          Enviando...
+        </>
+      ) : (
+        <>
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+            />
+          </svg>
+          {state.success ? "Mensagem Enviada!" : "Enviar Mensagem"}
+        </>
+      )}
     </button>
   );
 }
@@ -38,6 +81,22 @@ export default function ContactSection() {
         </div>
 
         <form action={formAction} className="space-y-6">
+          {state.success && (
+            <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
+              <p className="text-green-700 dark:text-green-400 text-center font-medium">
+                {state.message}
+              </p>
+            </div>
+          )}
+
+          {!state.success && state.message && (
+            <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-red-700 dark:text-red-400 text-center">
+                {state.message}
+              </p>
+            </div>
+          )}
+
           <div>
             <label
               htmlFor="name"

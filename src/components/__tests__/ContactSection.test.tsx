@@ -46,4 +46,30 @@ describe("ContactSection", () => {
       screen.getByText(/quer saber como podemos ajudar sua empresa/i)
     ).toBeDefined();
   });
+
+  it("renders the name input with required attribute", () => {
+    render(<ContactSection />);
+    const nameInput = screen.getByLabelText("Nome");
+    expect(nameInput.required).toBeTruthy();
+  });
+
+  it("renders the email input with required attribute", () => {
+    render(<ContactSection />);
+    const emailInput = screen.getByLabelText("E-mail");
+    expect(emailInput.required).toBeTruthy();
+  });
+
+  it("renders the message textarea with required attribute", () => {
+    render(<ContactSection />);
+    const messageTextarea = screen.getByLabelText("Mensagem");
+    expect(messageTextarea.required).toBeTruthy();
+  });
+
+  it("renders all inputs with proper types", () => {
+    render(<ContactSection />);
+    const nameInput = screen.getByLabelText("Nome");
+    const emailInput = screen.getByLabelText("E-mail");
+    expect((nameInput as HTMLInputElement).type).toBe("text");
+    expect((emailInput as HTMLInputElement).type).toBe("email");
+  });
 });
